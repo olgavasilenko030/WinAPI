@@ -13,13 +13,17 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	switch (uMsg)
 	{
 	case WM_INITDIALOG:
-		break;
+	{
+		HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON1));
+		SendMessage(hwnd, WM_SETICON, 0, (LPARAM)hIcon);
+	}
+	break;
 	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
 		case IDOK:MessageBox(hwnd, "Была нажата кнопка Ок!", "Info", MB_OK | MB_ICONINFORMATION); break;
 		case IDCANCEL: EndDialog(hwnd, 0); break;
-				}
+		}
 		break;
 	case WM_CLOSE:
 		EndDialog(hwnd, 0);
