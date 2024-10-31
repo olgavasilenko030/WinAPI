@@ -5,11 +5,11 @@
 #define IDD_DIALOG1                     101
 #define IDI_ICON1                       103
 #define IDC_STATIC_LOGIN                1001
-#define IDC_EDIT1_LOGIN                 1002
+#define IDC_EDIT_LOGIN                  1002
 #define IDC_STATIC_PASSWORD             1003
-#define IDC_EDIT2_PASSWORD              1004
-#define IDC_BUTTON1                     1005
+#define IDC_EDIT_PASSWORD               1004
 #define IDC_BUTTON1_COPY                1005
+#define IDC_BUTTON_COPY                 1005
 
 // Next default values for new objects
 // 
