@@ -40,7 +40,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				HWND hList = GetDlgItem(hwnd, IDC_LIST);
 				INT i = SendMessage(hList, LB_GETCURSEL, 0, 0);
 
-				SendMessage(hList, CB_GETLBTEXT, i, (LPARAM)sz_buffer);
+				SendMessage(hList, LB_GETTEXT, i, (LPARAM)sz_buffer);
 
 				CHAR sz_message[SIZE]{};
 
@@ -54,7 +54,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			{
 				HWND hList = GetDlgItem(hwnd, IDC_LIST);
 				INT i = SendMessage(hList, LB_GETCURSEL, 0, 0);
-				SendMessage(hList, CB_DELETESTRING, 0, (LPARAM)g_VALUES[i]);
+				SendMessage(hList, CB_DELETESTRING, 0, i);
 			}
 				break;
 
