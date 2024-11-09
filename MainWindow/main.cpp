@@ -2,6 +2,8 @@
 #include<Windows.h>
 #include <iostream>
 #include<cstdio>
+#include "resource.h"
+
 
 CONST CHAR g_sz_MY_WINDOW_CLASS[] = "My window";//Имя класса окна
 
@@ -11,15 +13,18 @@ INT WINAPI WinMain(HINSTANCE hIstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT
 {
 	// 1) Регистрация класса окна
 	WNDCLASSEX wc;
-	ZeroMemory (&wc, sizeof(wc));
+	ZeroMemory(&wc, sizeof(wc));
 	wc.style = 0;
 	wc.cbSize = sizeof(wc);
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0; //cd- Count Bytes
 
-	wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
-	wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.hIcon = (HICON)LoadImage(hIstance, "office.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);
+	wc.hIconSm = (HICON)LoadImage(hIstance, "games.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);// Загрузка через файл
+	//wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	//wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
+
+	wc.hCursor = LoadCursor(hIstance, MAKEINTRESOURCE (IDC_CURSOR1));
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
 
 	wc.hInstance = hIstance;
@@ -27,7 +32,7 @@ INT WINAPI WinMain(HINSTANCE hIstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT
 	wc.lpszClassName = g_sz_MY_WINDOW_CLASS;
 	wc.lpfnWndProc = (WNDPROC)WndProc;
 
-	if (!RegisterClassEx(&wc)) 
+	if (!RegisterClassEx(&wc))
 	{
 		MessageBox(NULL, "Class registration failed", NULL, MB_OK | MB_ICONINFORMATION);
 		return 0;
@@ -87,13 +92,13 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		GetWindowRect(hwnd, &rect);
 		INT window_width = rect.right - rect.left;
 		INT window_height = rect.bottom - rect.top;
-		
+
 		CONST INT SIZE = 256;
 		CHAR sz_title[SIZE]{};
-		sprintf(sz_title, "%s- Position:%ix%i;\tSize: %ix%i",g_sz_MY_WINDOW_CLASS, rect.left, rect.top,window_width,window_height);
+		sprintf(sz_title, "%s- Position:%ix%i;\tSize: %ix%i", g_sz_MY_WINDOW_CLASS, rect.left, rect.top, window_width, window_height);
 		SendMessage(hwnd, WM_SETTEXT, 0, (LPARAM)sz_title);
 	}
-		break;
+	break;
 	case WM_COMMAND:
 		break;
 	case WM_DESTROY:
