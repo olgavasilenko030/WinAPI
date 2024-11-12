@@ -26,7 +26,8 @@ INT WINAPI WinMain(HINSTANCE hIstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT
 	//wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	//wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 
-	wc.hCursor = LoadCursor(hIstance, MAKEINTRESOURCE (IDC_CURSOR3));
+	wc.hCursor = (HCURSOR)LoadImage(hIstance, "cursors\\starcraft-kursory\\Starcraft курсоры\\SCCMoveNew.ani",IMAGE_CURSOR,LR_DEFAULTSIZE, LR_DEFAULTSIZE,LR_LOADFROMFILE);
+	//wc.hCursor = LoadCursor(hIstance, MAKEINTRESOURCE (IDC_CURSOR3));
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
 
 	wc.hInstance = hIstance;
