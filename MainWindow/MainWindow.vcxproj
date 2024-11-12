@@ -131,12 +131,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cursor1.cur" />
+    <None Include="sccscroll3.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
+    <Image Include="penguin (1).ico" />
+    <Image Include="penguin (2).ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

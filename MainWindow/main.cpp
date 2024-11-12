@@ -19,12 +19,14 @@ INT WINAPI WinMain(HINSTANCE hIstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0; //cd- Count Bytes
 
-	wc.hIcon = (HICON)LoadImage(hIstance, "office.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);
-	wc.hIconSm = (HICON)LoadImage(hIstance, "games.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);// Загрузка через файл
+	wc.hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON1));
+	wc.hIconSm = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON2));
+	//wc.hIcon = (HICON)LoadImage(hIstance, "office.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);
+	//wc.hIconSm = (HICON)LoadImage(hIstance, "games.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);// Загрузка через файл
 	//wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	//wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 
-	wc.hCursor = LoadCursor(hIstance, MAKEINTRESOURCE (IDC_CURSOR1));
+	wc.hCursor = LoadCursor(hIstance, MAKEINTRESOURCE (IDC_CURSOR3));
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
 
 	wc.hInstance = hIstance;

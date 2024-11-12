@@ -23,6 +23,9 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -33,5 +36,19 @@
     <None Include="cursor1.cur">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="sccscroll3.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="penguin (1).ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="penguin (2).ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
