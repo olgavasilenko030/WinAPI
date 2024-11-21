@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+ï»¿#define _CRT_SECURE_NO_WARNINGS
 #include <Windows.h>
 #include <iostream>
 #include "resource.h"
@@ -34,7 +34,7 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT nCmdShow)
 {
-	// 1) Ðåãèñòðàöèÿ êëàññà îêíà
+	// 1) ÃÃ¥Ã£Ã¨Ã±Ã²Ã°Ã Ã¶Ã¨Ã¿ ÃªÃ«Ã Ã±Ã±Ã  Ã®ÃªÃ­Ã 
 	WNDCLASSEX wClass;
 	ZeroMemory(&wClass, sizeof(wClass));
 
@@ -60,14 +60,14 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 	}
 
 
-	// 2) Ñîçäàíèå îêíà
+	// 2) Ã‘Ã®Ã§Ã¤Ã Ã­Ã¨Ã¥ Ã®ÃªÃ­Ã 
 
 	HWND hwnd = CreateWindowEx
 	(
 		NULL,
 		g_sz_CLASS_NAME,
 		g_sz_CLASS_NAME,
-		WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX,// îêíî íå ðàñòÿãèâàåòñÿ è íå ðàçâîðà÷èâàåòñÿ
+		WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX,// Ã®ÃªÃ­Ã® Ã­Ã¥ Ã°Ã Ã±Ã²Ã¿Ã£Ã¨Ã¢Ã Ã¥Ã²Ã±Ã¿ Ã¨ Ã­Ã¥ Ã°Ã Ã§Ã¢Ã®Ã°Ã Ã·Ã¨Ã¢Ã Ã¥Ã²Ã±Ã¿
 		CW_USEDEFAULT, CW_USEDEFAULT,//Position: x,y
 		g_i_WINDOW_WIDTH, g_i_WINDOW_HEIGHT,// Size: width,height
 		NULL,
@@ -79,7 +79,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 	ShowWindow(hwnd, nCmdShow);
 	UpdateWindow(hwnd);
 
-	// 3)Çàïóñê öèêëà îêíà
+	// 3)Ã‡Ã Ã¯Ã³Ã±Ãª Ã¶Ã¨ÃªÃ«Ã  Ã®ÃªÃ­Ã 
 
 	MSG msg;
 	while (GetMessage(&msg, NULL, 0, 0) > 0)
@@ -118,13 +118,14 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			GetModuleHandle(NULL),
 			NULL
 		);
+		//TODO :Button Icons.
 
 		CHAR sz_digit[2] = "0";
 		for (int i = 6; i >= 0; i -= 3)
 		{
 			for (int j = 0; j < 3; j++)
 			{
-				sz_digit[0] = 49 + i + j;// 49- ASCII -êîä åäèíèöû.
+				sz_digit[0] = 49 + i + j;// 49- ASCII -ÐºÐ¾Ð´ ÐµÐ´Ð¸Ð½Ð¸Ñ†Ñ‹.
 				CreateWindowEx
 				(
 					NULL, "Button", sz_digit,
@@ -228,7 +229,12 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		SendMessage(hEditDisplay, WM_GETTEXT, SIZE, (LPARAM)sz_display);
 		if (LOWORD(wParam) >= IDC_BUTTON_0 && LOWORD(wParam) <= IDC_BUTTON_9)
 		{
-			if (input_operation)sz_display[0] = 0;
+			if (!input && !input_operation) {
+				SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_CLEAR), 0);
+				//ZeroMemory(sz_display,SIZE);
+				sz_display[0] = 0;
+			}
+			if (!input && input_operation)sz_display[0] = 0;
 			
 			sz_digit[0] = LOWORD(wParam) - IDC_BUTTON_0 + '0';
 			if (strlen(sz_display) == 1 && sz_display[0] == '0')
@@ -237,7 +243,7 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				strcat(sz_display, sz_digit);
 			SendMessage(hEditDisplay, WM_SETTEXT, 0, (LPARAM)sz_display);
 			input = TRUE;
-			input_operation = FALSE;
+			//input_operation = FALSE;
 		}
 		if (LOWORD(wParam) == IDC_BUTTON_POINT)
 		{
@@ -259,6 +265,9 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			operation = 0;
 			input = FALSE;
 			input_operation = FALSE;
+			//strcpy(sz_display, "0");
+			//sz_display[0] = 0;
+			ZeroMemory(sz_display, SIZE);
 			SendMessage(hEditDisplay, WM_SETTEXT, 0, (LPARAM)"0");
 		}
 		if (LOWORD(wParam) >= IDC_BUTTON_PLUS && LOWORD(wParam) <= IDC_BUTTON_SLASH)
@@ -267,13 +276,15 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			if (a == DBL_MIN) a = atof(sz_display);
 			//else b = atof(sz_display);
 			//input = FALSE;
-			SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_EQUAL), 0);
+			if (input_operation)SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_EQUAL), 0);
 			operation = LOWORD(wParam);
+			input = FALSE;
 			input_operation = TRUE;
 		}
 		if (LOWORD(wParam) == IDC_BUTTON_EQUAL)
 		{
-			if (input)b = atof(sz_display);
+			//if (b==DBL_MIN && input)
+			if (input || b==DBL_MIN && !input)b = atof(sz_display);
 			input = FALSE;
 			switch (operation)
 			{
@@ -283,6 +294,7 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			case IDC_BUTTON_SLASH:a /= b; break;
 			}
 			
+			//input = FALSE;
 			input_operation = FALSE;
 			if (a == DBL_MIN)strcpy(sz_display, "0");
 			else sprintf(sz_display, "%g", a);
@@ -294,6 +306,10 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	break;
 	case WM_KEYDOWN:
 	{
+		if (GetKeyState(VK_SHIFT) < 0)
+		{
+			if (wParam == 0x38) SendMessage(hwnd, WM_COMMAND, IDC_BUTTON_ASTER, 0);
+		}
 		if (wParam >= 0x30 && wParam <= 0x39)
 			SendMessage(hwnd, WM_COMMAND, wParam - 0x30 + IDC_BUTTON_0, 0);
 		//if (wParam >= '0' && wParam <= '9')
@@ -302,10 +318,18 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			SendMessage(hwnd, WM_COMMAND, wParam - 0x60 + IDC_BUTTON_0, 0);
 		switch (wParam)
 		{
+		case VK_ADD:
+		case VK_OEM_PLUS:	SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_PLUS), 0); break;
+		case VK_SUBTRACT:
+		case VK_OEM_MINUS:	SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_MINUS), 0); break;
+		case VK_MULTIPLY:	SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_ASTER), 0); break;
+		case VK_DIVIDE:
+		case VK_OEM_2:		SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_SLASH), 0); break;
 		case VK_DECIMAL:
 		case VK_OEM_PERIOD: SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_POINT), 0); break;
-		case VK_ESCAPE: SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_CLEAR), 0); break;
-		case VK_BACK: SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_BSP), 0); break;
+		case VK_ESCAPE:		SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_CLEAR), 0); break;
+		case VK_BACK:		SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_BSP), 0); break;
+		case VK_RETURN:		SendMessage(hwnd, WM_COMMAND, LOWORD(IDC_BUTTON_EQUAL), 0); break;
 		}
 	}
 	break;
