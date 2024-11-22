@@ -34,7 +34,7 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT nCmdShow)
 {
-	// 1) Ðåãèñòðàöèÿ êëàññà îêíà
+	// 1) Регистрация класса окна
 	WNDCLASSEX wClass;
 	ZeroMemory(&wClass, sizeof(wClass));
 
@@ -60,14 +60,14 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 	}
 
 
-	// 2) Ñîçäàíèå îêíà
+	// 2) Создание окна
 
 	HWND hwnd = CreateWindowEx
 	(
 		NULL,
 		g_sz_CLASS_NAME,
 		g_sz_CLASS_NAME,
-		WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX,// îêíî íå ðàñòÿãèâàåòñÿ è íå ðàçâîðà÷èâàåòñÿ
+		WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX,
 		CW_USEDEFAULT, CW_USEDEFAULT,//Position: x,y
 		g_i_WINDOW_WIDTH, g_i_WINDOW_HEIGHT,// Size: width,height
 		NULL,
@@ -79,7 +79,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 	ShowWindow(hwnd, nCmdShow);
 	UpdateWindow(hwnd);
 
-	// 3)Çàïóñê öèêëà îêíà
+	// 3)Запуск цикла сообщений:
 
 	MSG msg;
 	while (GetMessage(&msg, NULL, 0, 0) > 0)
@@ -128,7 +128,7 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				sz_digit[0] = 49 + i + j;// 49- ASCII -код единицы.
 				CreateWindowEx
 				(
-					NULL, "Button", sz_digit,
+					NULL, "Button", sz_digit,   
 					WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
 					g_i_BUTTON_START_X + j * (g_i_BUTTON_SIZE + g_i_INTERVAL),
 					g_i_BUTTON_START_Y + (g_i_BUTTON_SIZE + g_i_INTERVAL) * (2 - i / 3),

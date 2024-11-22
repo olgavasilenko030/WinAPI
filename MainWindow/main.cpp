@@ -1,17 +1,17 @@
-#define _CRT_SECURE_NO_WARNINGS
+п»ї#define _CRT_SECURE_NO_WARNINGS
 #include<Windows.h>
 #include <iostream>
 #include<cstdio>
 #include "resource.h"
 
 
-CONST CHAR g_sz_MY_WINDOW_CLASS[] = "My window";//Имя класса окна
+CONST CHAR g_sz_MY_WINDOW_CLASS[] = "My window";//Г€Г¬Гї ГЄГ«Г Г±Г±Г  Г®ГЄГ­Г 
 
 INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 INT WINAPI WinMain(HINSTANCE hIstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT nCmdShow)
 {
-	// 1) Регистрация класса окна
+	// 1) Р РµРіРёСЃС‚СЂР°С†РёСЏ РєР»Р°СЃСЃР° РѕРєРЅР°
 	WNDCLASSEX wc;
 	ZeroMemory(&wc, sizeof(wc));
 	wc.style = 0;
@@ -22,11 +22,11 @@ INT WINAPI WinMain(HINSTANCE hIstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT
 	wc.hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON1));
 	wc.hIconSm = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON2));
 	//wc.hIcon = (HICON)LoadImage(hIstance, "office.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);
-	//wc.hIconSm = (HICON)LoadImage(hIstance, "games.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);// Загрузка через файл
+	//wc.hIconSm = (HICON)LoadImage(hIstance, "games.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);// Г‡Г ГЈГ°ГіГ§ГЄГ  Г·ГҐГ°ГҐГ§ ГґГ Г©Г«
 	//wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	//wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 
-	wc.hCursor = (HCURSOR)LoadImage(hIstance, "cursors\\starcraft-kursory\\Starcraft курсоры\\SCCMoveNew.ani",IMAGE_CURSOR,LR_DEFAULTSIZE, LR_DEFAULTSIZE,LR_LOADFROMFILE);
+	wc.hCursor = (HCURSOR)LoadImage(hIstance, "cursors\\starcraft-kursory\\Starcraft ГЄГіГ°Г±Г®Г°Г»\\SCCMoveNew.ani",IMAGE_CURSOR,LR_DEFAULTSIZE, LR_DEFAULTSIZE,LR_LOADFROMFILE);
 	//wc.hCursor = LoadCursor(hIstance, MAKEINTRESOURCE (IDC_CURSOR3));
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
 
@@ -41,11 +41,11 @@ INT WINAPI WinMain(HINSTANCE hIstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT
 		return 0;
 	}
 
-	//2) Создание окна:
+	//2) РЎРѕР·РґР°РЅРёРµ РѕРєРЅР°:
 
 
 	INT screen_width = GetSystemMetrics(SM_CXSCREEN);
-	INT screen_height = GetSystemMetrics(SM_CYSCREEN);//Разрешение экрана
+	INT screen_height = GetSystemMetrics(SM_CYSCREEN);//Р Р°Р·СЂРµС€РµРЅРёРµ СЌРєСЂР°РЅР°
 
 	INT window_width = screen_width * 3 / 4;
 	INT window_height = screen_height * 0.75;
@@ -66,12 +66,12 @@ INT WINAPI WinMain(HINSTANCE hIstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT
 		NULL
 
 	);
-	ShowWindow(hwnd, nCmdShow); //Задает режим отображения окна (Развернуто на весь экран, свернуто в окно, свернуто в панель задач)
+	ShowWindow(hwnd, nCmdShow); //Р—Р°РґР°РµС‚ СЂРµР¶РёРј РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РѕРєРЅР° (Р Р°Р·РІРµСЂРЅСѓС‚Рѕ РЅР° РІРµСЃСЊ СЌРєСЂР°РЅ, СЃРІРµСЂРЅСѓС‚Рѕ РІ РѕРєРЅРѕ, СЃРІРµСЂРЅСѓС‚Рѕ РІ РїР°РЅРµР»СЊ Р·Р°РґР°С‡)
 
-	UpdateWindow(hwnd); //Прорисовывает окно
+	UpdateWindow(hwnd); //РџСЂРѕСЂРёСЃРѕРІС‹РІР°РµС‚ РѕРєРЅРѕ
 
 
-	//3) Запуск цикла сообщений:
+	//3) Р—Р°РїСѓСЃРє С†РёРєР»Р° СЃРѕРѕР±С‰РµРЅРёР№:
 	MSG msg;
 	while (GetMessage(&msg, NULL, 0, 0) > 0)
 	{
@@ -92,7 +92,7 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		(
 			NULL,
 			"Static",
-			"Эта подпись создана при помощи функции CreateWindowsEx()",
+			"Р­С‚Р° РїРѕРґРїРёСЃСЊ СЃРѕР·РґР°РЅР° РїСЂРё РїРѕРјРѕС‰Рё С„СѓРЅРєС†РёРё CreateWindowsEx()",
 			WS_CHILDWINDOW | WS_VISIBLE,
 			10, 10,
 			500, 25,
@@ -118,7 +118,7 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		(
 			NULL,
 			"Button",
-			"Применить",
+			"ГЏГ°ГЁГ¬ГҐГ­ГЁГІГј",
 			WS_CHILD | WS_VISIBLE|WS_TABSTOP|WS_GROUP,
 			275, 85,
 			150, 32,

@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+п»ї#define _CRT_SECURE_NO_WARNINGS
 #include<Windows.h>
 #include "resource.h"
 #include<cstdio>
@@ -22,7 +22,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_INITDIALOG:
 	{
 		HICON hIcon = LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_ICON1));
-		// GetModuleHendle(NULL); возвращает hInstance нашей программы
+		// GetModuleHendle(NULL); РІРѕР·РІСЂР°С‰Р°РµС‚ hInstance РЅР°С€РµР№ РїСЂРѕРіСЂР°РјРјС‹
 		SendMessage(hwnd, WM_SETICON, 0, (LPARAM)hIcon);
 		HWND hList = GetDlgItem(hwnd, IDC_LIST1);
 		for (int i = 0; i < sizeof(g_VALUES) / sizeof(g_VALUES[0]); i++)
@@ -63,7 +63,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			SendMessage(hList, LB_GETTEXT, i, (LPARAM)sz_buffer);
 
 			CHAR sz_message[SIZE]{};
-			sprintf(sz_message, "Вы выбрали пункт №%i со значением \"%s\".", i, sz_buffer);
+			sprintf(sz_message, "Р’С‹ РІС‹Р±СЂР°Р»Рё РїСѓРЅРєС‚ в„–%i СЃРѕ Р·РЅР°С‡РµРЅРёРµРј \"%s\".", i, sz_buffer);
 			MessageBox(hwnd, sz_message, "Info", MB_OK | MB_ICONINFORMATION);
 		}
 		break;
@@ -107,14 +107,14 @@ BOOL CALLBACK DlgProcAddItem(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			if (strlen(sz_buffer) == 0) break;
 
 			HWND hList = GetDlgItem(GetParent(hwnd), IDC_LIST1);
-			//GetParent (); возвращает родительское окно (HWND родительского окна ) для указанного окна
+			//GetParent (); РІРѕР·РІСЂР°С‰Р°РµС‚ СЂРѕРґРёС‚РµР»СЊСЃРєРѕРµ РѕРєРЅРѕ (HWND СЂРѕРґРёС‚РµР»СЊСЃРєРѕРіРѕ РѕРєРЅР° ) РґР»СЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ РѕРєРЅР°
 			if (SendMessage(hList, LB_FINDSTRING, -1, (LPARAM)sz_buffer) == LB_ERR)
 			{
 				SendMessage(hList, LB_ADDSTRING, 0, (LPARAM)sz_buffer);
 			}
 			else
 			{
-				INT result = MessageBox(hwnd, "Такое вхождение уже есть в списке, введите другое значение", "Info", MB_YESNO | MB_ICONQUESTION);
+				INT result = MessageBox(hwnd, "РўР°РєРѕРµ РІС…РѕР¶РґРµРЅРёРµ СѓР¶Рµ РµСЃС‚СЊ РІ СЃРїРёСЃРєРµ, РІРІРµРґРёС‚Рµ РґСЂСѓРіРѕРµ Р·РЅР°С‡РµРЅРёРµ", "Info", MB_YESNO | MB_ICONQUESTION);
 				if (result == IDYES)break;
 			}
 
