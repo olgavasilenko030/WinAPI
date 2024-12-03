@@ -38,6 +38,7 @@ CONST COLORREF g_WINDOWS_BACKGROUND[] = { RGB(0,0,150), RGB(75,75,75) };
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 VOID SetSkin(HWND hwnd, CONST CHAR* skin);
+VOID SetSkinFromDLL(HWND hwnd, CONST CHAR* skin);
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT nCmdShow)
 {
@@ -557,8 +558,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		switch (skin_index)
 		{
-		case IDR_SQUARE_BLUE: SetSkin(hwnd, "square_blue"); break;
-		case IDR_METAL_MISTRAL:SetSkin(hwnd, "metal_mistral"); break;
+		case IDR_SQUARE_BLUE: SetSkinFromDLL(hwnd, "square_blue"); break;
+		case IDR_METAL_MISTRAL:SetSkinFromDLL(hwnd, "metal_mistral"); break;
 		case IDR_EXIT: DestroyWindow(hwnd);
 		}
 		DestroyMenu(hSubmenuSkins);
@@ -621,7 +622,7 @@ VOID SetSkin(HWND hwnd, CONST CHAR* skin)
 	for (int i = 0; i < 18; i++)
 	{
 		HWND hButton = GetDlgItem(hwnd, IDC_BUTTON_0 + i);
-		sprintf(sz_filename, "ButtonBMP\\%s\\%s.bmp", skin, g_BUTTON_FILENAME[i]);
+		sprintf(sz_filename, "ButtonsBMP\\%s\\%s.bmp", skin, g_BUTTON_FILENAME[i]);
 		HBITMAP bmpButton = (HBITMAP)LoadImage
 		(
 			GetModuleHandle(NULL),
@@ -634,4 +635,24 @@ VOID SetSkin(HWND hwnd, CONST CHAR* skin)
 
 		SendMessage(hButton, BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)bmpButton);
 	}
+}
+VOID SetSkinFromDLL(HWND hwnd, CONST CHAR* skin)
+{
+	CHAR filename[MAX_PATH]{};
+	sprintf(filename, "ButtonsBMP\\%s", skin);
+	HMODULE hInst = LoadLibrary(filename);
+	for (int i = IDC_BUTTON_0; i <= IDC_BUTTON_EQUAL; i++)
+	{
+		HBITMAP buttonBMP = (HBITMAP)LoadImage
+		(
+			hInst,
+			MAKEINTRESOURCE(i),
+			IMAGE_BITMAP,
+			i > IDC_BUTTON_0		? g_i_BUTTON_SIZE : g_i_BUTTON_DOUBLE_SIZE,
+			i < IDC_BUTTON_EQUAL	? g_i_BUTTON_SIZE : g_i_BUTTON_DOUBLE_SIZE,
+			NULL
+		);
+		SendMessage(GetDlgItem(hwnd, i), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)buttonBMP);
+	}
+	FreeLibrary(hInst);
 }
