@@ -14,7 +14,7 @@ CONST INT g_i_BUTTON_DOUBLE_SIZE = g_i_BUTTON_SIZE * 2 + g_i_INTERVAL;
 CONST INT g_i_FONT_HEIGHT = 32;
 CONST INT g_i_FONT_WIDTH = g_i_FONT_HEIGHT * 2 / 5;
 CONST INT g_i_DISPLAY_WIDTH = g_i_BUTTON_SIZE * 5 + g_i_INTERVAL * 4;
-CONST INT g_i_DISPLAY_HEIGHT = g_i_FONT_HEIGHT+4;
+CONST INT g_i_DISPLAY_HEIGHT = g_i_FONT_HEIGHT+2;
 
 
 CONST INT g_i_START_X = 10;
@@ -54,6 +54,9 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 	wClass.hIconSm = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
 	wClass.hCursor = LoadCursor(hInstance, IDC_ARROW);
 	wClass.hbrBackground = (HBRUSH)COLOR_WINDOW;
+	//wClass.hbrBackground = CreateSolidBrush(RGB(0, 0, 200));
+	HBITMAP hBackground = (HBITMAP)LoadImage(hInstance, "Picture\\wolf.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
+	wClass.hbrBackground = CreatePatternBrush(hBackground);
 
 	wClass.hInstance = hInstance;
 	wClass.lpszClassName = g_sz_CLASS_NAME;
@@ -329,10 +332,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			SetTextColor(hdc, g_DISPLAY_FOREGROUND[color_index]);
 			SetBkColor(hdc, g_DISPLAY_BACKGROUND[color_index]);
 
-			HBRUSH hbrBackground = CreateSolidBrush(RGB(30, 30, 30));
+			HBRUSH hbrBackground = CreateSolidBrush(g_WINDOWS_BACKGROUND[color_index]);
 			SetClassLongPtr(hwnd, GCLP_HBRBACKGROUND, (LONG)hbrBackground);
 			SendMessage(hwnd, WM_ERASEBKGND, wParam, 0);
-			UpdateWindow(hwnd);
+			//UpdateWindow(hwnd);
 			//ReleaseDC(hEdit, hdc);
 			return(LRESULT)hbrBackground;
 		}
@@ -564,15 +567,15 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		if (skin_index >= IDR_SQUARE_BLUE && skin_index <= IDR_METAL_MISTRAL)
 		{
 
-		color_index = IDR_CONTEXT_MENU - IDR_SQUARE_BLUE - 1;
+		color_index = skin_index -IDR_CONTEXT_MENU - 1;
 		HWND hEditDisplay = GetDlgItem(hwnd, IDC_EDIT_DISPLAY);
 		HDC hdcDisplay = GetDC(hEditDisplay);
-		SendMessage(hEditDisplay, WM_CTLCOLOREDIT, (WPARAM)hdcDisplay, (LPARAM)hEditDisplay);
+		SendMessage(hwnd, WM_CTLCOLOREDIT, (WPARAM)hdcDisplay, (LPARAM)hEditDisplay);
 		ReleaseDC(hEditDisplay, hdcDisplay);
 
 		CHAR sz_buffer[MAX_PATH]{};
 		SendMessage(hEditDisplay, WM_GETTEXT, MAX_PATH, (LPARAM)sz_buffer);
-		SendMessage(hEditDisplay, WM_SETTEXT, MAX_PATH, (LPARAM)sz_buffer);
+		SendMessage(hEditDisplay, WM_SETTEXT, 0, (LPARAM)sz_buffer);
 		}
 	}
 	break;
